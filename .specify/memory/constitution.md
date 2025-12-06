@@ -1,55 +1,155 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: 0.0.0 → 1.0.0
+- List of modified principles: All principles have been replaced with a new set of standards.
+- Added sections: Writing Quality, Academic & Technical Standards, Textbook Structure, Workflow, Book Development, AI Collaboration, Robotics & AI Content.
+- Removed sections: All placeholder sections removed.
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md
+  - ✅ .specify/templates/spec-template.md
+  - ✅ .specify/templates/tasks-template.md
+- Follow-up TODOs: None
+-->
 
-## Core Principles
+# Constitution for Hackathon I: Physical AI & Humanoid Robotics Textbook Project
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 1. Writing Quality Standards (Global)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+These rules apply to every chapter, lesson, appendix, summary, exercise, and explanation across the entire textbook.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### 1.1 Clarity & Readability
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- **Target Flesch-Kincaid Grade Level:** 8–10
+- Sentences must be short, direct, and active voice.
+- Use technical terms, but each must be explained on first use.
+- Avoid overlong paragraphs (max 5–6 lines per paragraph).
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### 1.2 Tone
 
-### [PRINCIPLE_6_NAME]
+- Professional
+- Educational
+- Friendly, encouraging, and motivational
+- Never condescending
 
+## 2. Academic & Technical Standards
 
-[PRINCIPLE__DESCRIPTION]
+### 2.1 Source Credibility
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Use only verified, reliable sources, including:
+- Research papers
+- Robotics documentation
+- AI/LLM/Embodied AI papers
+- Textbooks
+- High-quality online references (e.g., ROS docs, NVIDIA, MIT, Google DeepMind)
+- No hallucinated citations.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### 2.2 Citation Format
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- Use APA 7th edition for all references.
+- Every factual claim must have a source unless it is common knowledge.
+- Code examples do not require citations unless borrowed.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### 2.3 Academic Integrity
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- Zero plagiarism tolerance.
+- All content must be originally generated.
+- Rewriting from sources must involve deep transformation, not surface paraphrasing.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+## 3. Textbook Structure Standards (Global Rules)
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### 3.1 Chapter Layout (required for every chapter)
+
+Each chapter must follow this structure:
+- Learning Objectives
+- Concept Explanation
+- Real-World Examples (AI + Robotics)
+- Key Takeaways
+- Exercises / Activities
+- Glossary (if needed)
+
+### 3.2 Lesson Style
+
+Must support AI-native learning (Panaversity standard). Include:
+- Illustrations (described verbally)
+- Code snippets (Python, ROS2, robotics frameworks)
+- Critical thinking questions
+- Hands-on experiments where possible
+
+## 4. Spec-Kit Plus Workflow Standards (Global)
+
+These rules apply to every phase of SDD-RI.
+
+### 4.1 Use the Full SDD-RI Workflow
+
+Every feature, chapter, and module must go through:
+- /sp.specify
+- /sp.clarify
+- /sp.plan
+- /sp.tasks
+- /sp.implement
+
+AI should never jump to writing chapters without a specification.
+
+### 4.2 No Code Generation Without a Plan
+
+All code examples (robotics, sensors, AI models) must:
+- Be planned first
+- Follow task breakdown
+- Follow the textbook’s learning objectives
+
+## 5. Book Development & Deployment Standards
+
+### 5.1 Framework
+
+- The book must be built with Docusaurus.
+- Use Markdown + MDX.
+- Must be deployable on GitHub Pages.
+
+### 5.2 Consistency Rules
+
+Across the book, maintain:
+- Consistent formatting
+- Consistent folder structure
+- Consistent image naming & placement
+- Consistent headings hierarchy (#, ##, ###, etc.)
+
+## 6. AI Collaboration Standards
+
+### 6.1 Reusability
+
+- Create reusable skills, templates, or subagents using P+Q+P pattern.
+- Save:
+  - Chapter templates
+  - Robotics code templates
+  - Explanation frameworks
+
+### 6.2 Verification
+
+Every output must be checked for:
+- Accuracy
+- Clarity
+- Technical correctness
+- Factual validity
+- Hallucination risk
+
+## 7. Robotics & AI Content Rules
+
+### 7.1 Accuracy Requirements
+
+All robotics and AI content must:
+- Follow real frameworks (ROS2, MoveIt, Gazebo, Isaac Sim, etc.)
+- Avoid hypothetical robotics features
+- Use industry-accurate terminology
+- Reflect 2024–2025 standards of Physical AI and Humanoid Robotics
+
+### 7.2 Safety Principles
+
+All robotics descriptions must follow:
+- Human safety
+- Ethical handling of AI & robots
+- Responsible deployment
+- Realistic expectations
+
+---
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-06 | **Last Amended**: 2025-12-06

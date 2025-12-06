@@ -75,6 +75,28 @@
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
 
+## Textbook Structure (Constitution Requirement)
+
+*This section ensures alignment with the global standards defined in the project constitution.*
+
+### Chapter Layout
+*Per the constitution, every chapter specification must account for the following sections.*
+- [ ] **Learning Objectives**: What will the reader be able to do after this chapter?
+- [ ] **Concept Explanation**: Clear, concise explanation of the core topics.
+- [ ] **Real-World Examples**: Ground concepts in practical AI and Robotics applications.
+- [ ] **Key Takeaways**: A summary of the most important points.
+- [ ] **Exercises / Activities**: Hands-on tasks to reinforce learning.
+- [ ] **Glossary**: Definitions for new technical terms introduced.
+
+### Lesson Style
+*Per the constitution, lessons should be designed for AI-native learning.*
+- [ ] **Illustrations**: Plan for visuals (even if just described verbally for an illustrator).
+- [ ] **Code Snippets**: Identify where Python, ROS2, or other framework code is needed.
+- [ ] **Critical Thinking Questions**: Include questions that prompt deeper reflection.
+- [ ] **Hands-on Experiments**: Propose ideas for practical experiments where applicable.
+
+---
+
 ## Requirements *(mandatory)*
 
 <!--

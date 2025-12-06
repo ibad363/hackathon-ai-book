@@ -18,20 +18,26 @@
 -->
 
 **Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., Docusaurus, React, MDX or NEEDS CLARIFICATION]  
 **Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Testing**: [e.g., Jest, Vitest, Cypress or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., GitHub Pages, Vercel, Netlify or NEEDS CLARIFICATION]
+**Project Type**: [Docusaurus Website]  
+**Performance Goals**: [domain-specific, e.g., Fast load times, Lighthouse score >90 or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., Static site generation, Markdown/MDX content or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., Number of chapters, lessons, interactive components or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **[ ] Writing Quality**: Does the plan account for clarity, readability (Flesch-Kincaid 8-10), and a professional, encouraging tone?
+- **[ ] Academic Standards**: Does the plan include steps for sourcing, citation (APA 7th), and academic integrity checks?
+- **[ ] Textbook Structure**: Does the plan for each chapter respect the required layout (Objectives, Concepts, Examples, etc.)?
+- **[ ] SDD-RI Workflow**: Does the plan adhere to the full `/sp.specify` -> `/sp.implement` workflow?
+- **[ ] Book Development**: Is the plan aligned with using Docusaurus, Markdown/MDX, and deploying to GitHub Pages?
+- **[A ]I Collaboration**: Does the plan consider creating reusable templates or skills?
+- **[ ] Robotics & AI Content**: Are there checks for accuracy and safety principles in the content plan?
 
 ## Project Structure
 
@@ -47,52 +53,34 @@ specs/[###-feature]/
 └── tasks.md             # Phase 2 output (/sp.tasks command - NOT created by /sp.plan)
 ```
 
-### Source Code (repository root)
+### Source Code (Docusaurus Project Root)
 <!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
+  The structure below is a typical Docusaurus setup.
+  The plan should detail which chapters/lessons are being created or modified.
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+# Docusaurus Project Structure
+docs/
+  ├── intro.md
+  ├── chapter1/
+  │   ├── _category_.json
+  │   ├── lesson1.md
+  │   └── lesson2.mdx
+  └── chapter2/
+      ├── ...
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+  ├── components/
+  │   ├── MyReactComponent.js
+  └── css/
+      └── custom.css
+docusaurus.config.js
+package.json
+sidebars.js
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+directories captured above, confirming it aligns with the Docusaurus framework.]
 
 ## Complexity Tracking
 

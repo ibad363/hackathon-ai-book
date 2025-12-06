@@ -20,10 +20,13 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Docusaurus project**: `docs/` for Markdown/MDX files, `src/` for React components.
+- **Content**: `docs/chapter-name/lesson-name.md`
+- **Components**: `src/components/MyComponent.js`
+- **Tests**: `src/components/__tests__/MyComponent.test.js` or a root `__tests__` directory.
+- Paths shown below assume a Docusaurus structure.
+
+**Note on Technology**: Remember to consult the project constitution for the approved technology stacks for code examples (e.g., Python, ROS2, etc.).
 
 <!-- 
   ============================================================================

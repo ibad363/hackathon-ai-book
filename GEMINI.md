@@ -208,3 +208,10 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- JavaScript (Node.js for Docusaurus), Markdown/MDX, Python (for code snippets) + Docusaurus v3, React, MDX, GitHub, GitHub Actions, Claude Code, Spec-Kit Plus (001-robotics-textbook-spec)
+- Git repository (for content), GitHub Pages (for hosting) (001-robotics-textbook-spec)
+
+## Recent Changes
+- 001-robotics-textbook-spec: Added JavaScript (Node.js for Docusaurus), Markdown/MDX, Python (for code snippets) + Docusaurus v3, React, MDX, GitHub, GitHub Actions, Claude Code, Spec-Kit Plus

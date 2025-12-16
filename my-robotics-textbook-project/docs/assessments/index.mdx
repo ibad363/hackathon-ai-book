@@ -1,0 +1,58 @@
+---
+title: Assessments
+slug: /assessments
+---
+
+# Assessments: Applying Your Knowledge
+
+This chapter outlines the assessments for the "Physical AI & Humanoid Robotics" course. These projects are designed to be practical, hands-on experiences that allow you to apply the concepts you've learned in a tangible way.
+
+## 1. Midterm Project (Week 7)
+
+**Goal**: To apply the concepts from the first half of the course in a small, integrated project.
+
+**Task**: Create a ROS 2 application that involves a simulated mobile robot performing a simple task in Gazebo. The goal is to navigate to a specific point in a custom environment while avoiding at least one obstacle.
+
+### Requirements:
+-   **Robot**: You can use a simple differential drive robot model (e.g., a TurtleBot3 or a custom model).
+-   **Environment**: You must create a custom Gazebo world (`.sdf` or `.world` file) that includes a ground plane, your robot, and at least one static obstacle (e.g., a wall, a cylinder, a box).
+-   **Control**: The robot must be controlled by your own ROS 2 Python nodes. You should have at least:
+    -   A node that uses sensor data (e.g., from a laser scanner) to detect obstacles.
+    -   A node that implements a simple navigation logic (e.g., "go-to-goal" with obstacle avoidance).
+-   **Sensing**: The robot must be equipped with at least one sensor for obstacle avoidance (a 360-degree laser scanner is recommended).
+
+### Deliverables:
+1.  **GitHub Repository**: A link to a public GitHub repository containing:
+    -   Your ROS 2 package(s).
+    -   Your Gazebo world file.
+    -   A `README.md` file with instructions on how to launch your simulation and run your code.
+2.  **Video Demonstration**: A short (1-2 minute) video screen recording showing your robot successfully navigating to a goal while avoiding the obstacle.
+3.  **Brief Report**: A short report (1-2 pages) in Markdown format within your repository that explains:
+    -   Your overall approach to the problem.
+    -   The structure of your ROS 2 nodes.
+    -   The logic behind your obstacle avoidance algorithm.
+    -   Any challenges you faced and how you overcame them.
+
+---
+
+## 2. Final Capstone Project (Weeks 9-13)
+
+**Goal**: To design, build, and demonstrate a more complex robotic system, culminating in the "Autonomous Humanoid" project.
+
+**Task**: The detailed requirements for the capstone project are described in the [Capstone Project](/docs/capstone-project) chapter. This section provides a high-level overview of the grading and expectations.
+
+### Grading Criteria:
+The final project will be graded based on the following criteria:
+
+-   **Functionality (40%)**:
+    -   Does the robot successfully complete the required tasks as outlined in the capstone project description?
+    -   How robust and reliable is the system?
+-   **Technical Approach (30%)**:
+    -   The quality, clarity, and organization of your code.
+    -   Effective use of ROS 2 best practices (e.g., modular nodes, launch files, parameters).
+    -   The cleverness and creativity of your solution to the perception, control, and integration challenges.
+-   **Presentation (20%)**:
+    -   The quality of your final project presentation and live demonstration.
+    -   Your ability to clearly and concisely explain your work, your design decisions, and your results.
+-   **Report (10%)**:
+    -   The clarity, completeness, and professionalism of your final written report.

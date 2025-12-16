@@ -1,0 +1,371 @@
+---
+title: Module 1 - ROS 2 Fundamentals
+slug: /modules/ros2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Module 1: ROS 2 Fundamentals
+
+Welcome to the core of modern robotics development! This chapter introduces you to the Robot Operating System (ROS) 2, the foundational software framework that acts as the nervous system for a vast array of robotic applications. By mastering ROS 2, you'll gain the ability to create complex, modular, and scalable robotics systems.
+
+## 1. Learning Objectives
+
+Upon completing this chapter, you will be able to:
+
+-   **Explain** the core concepts of ROS 2: nodes, topics, services, actions, and parameters.
+-   **Understand** the ROS 2 architecture and communication patterns.
+-   **Create, build, and run** a simple ROS 2 package and node using Python.
+-   **Use** ROS 2 command-line tools to inspect and debug a running system.
+-   **Explain** the importance of launch files for managing complex systems.
+
+---
+
+## 2. Introduction to ROS 2
+
+### What is ROS 2?
+
+ROS 2 is an open-source, flexible framework for writing robot software. It's not an operating system in the traditional sense (like Windows or Linux), but a set of software libraries and tools that help you build robot applications. Think of it as a middleware that simplifies the task of creating complex and robust robot behavior across a wide variety of robotic platforms.
+
+ROS 2 handles low-level tasks like hardware abstraction, device drivers, and message-passing between processes, allowing you to focus on the high-level logic of your robot.
+
+### Why ROS 2?
+
+-   **Modularity**: ROS 2 encourages a modular design, where complex systems are broken down into smaller, reusable programs called **nodes**.
+-   **Scalability**: It is designed for systems of all sizes, from a single-board computer to a large network of robots.
+-   **Real-time Capabilities**: ROS 2 provides support for real-time control, which is critical for many robotics applications.
+-   **Cross-platform**: It supports Linux, macOS, and Windows.
+-   **Strong Community**: A large and active community contributes to a rich ecosystem of packages and tools.
+
+---
+
+## 3. Core Concepts of ROS 2
+
+At the heart of ROS 2 is a graph of processes (nodes) that communicate with each other. This communication is what allows a robot's various components—sensors, actuators, and decision-making algorithms—to work together.
+
+### Nodes
+
+A **node** is the fundamental processing unit in ROS 2. Each node should be responsible for a single, well-defined task, such as controlling a wheel motor, reading a laser scanner, or planning a path. A complete robotic system is typically composed of many nodes working in concert.
+
+### Communication Patterns
+
+ROS 2 provides four main communication patterns:
+
+#### a. Topics (Publish/Subscribe)
+
+**Topics** are used for asynchronous, one-to-many communication. A node can **publish** messages to a topic, and any number of other nodes can **subscribe** to that topic to receive the messages. This is the most common communication pattern in ROS 2, used for streaming data like sensor readings or robot state.
+
+**How it works:**
+1.  A **Publisher** node sends a message of a specific type to a named topic.
+2.  The ROS 2 middleware delivers the message to all **Subscriber** nodes that are listening to that topic.
+3.  The publisher doesn't know (or care) who is receiving the messages.
+
+```mermaid
+graph TD
+    A[Publisher Node<br/>(e.g., /camera_driver)] -- Publishes Image Message --> B(Topic<br/>/image_raw);
+    B -- Message Delivered --> C[Subscriber Node<br/>(e.g., /image_processor)];
+    B -- Message Delivered --> D[Subscriber Node<br/>(e.g., /image_recorder)];
+```
+*Figure 1: The Publish/Subscribe Model. A single publisher sends data to multiple subscribers via a topic.*
+
+#### b. Services (Request/Reply)
+
+**Services** are used for synchronous, one-to-one communication. A **Service Client** sends a **request** to a **Service Server**, which processes the request and sends back a **response**. This pattern is used for tasks that have a clear start and end, like "capture an image" or "compute a path".
+
+**How it works:**
+1.  A **Client** node sends a request message to a named service.
+2.  A **Server** node receives the request, performs a task, and sends a response message back to the client.
+3.  The client waits (blocks) until it receives the response.
+
+```mermaid
+graph TD
+    A[Service Client<br/>(e.g., /path_requester)] -- 1. Sends Request (Start/Goal) --> B(Service<br/>/compute_path);
+    B -- 2. Processed by --> C[Service Server<br/>(e.g., /path_planner)];
+    C -- 3. Sends Response (Path) --> B;
+    B -- 4. Response forwarded to --> A;
+```
+*Figure 2: The Request/Reply Model. A client requests an action and waits for a single server to respond.*
+
+#### c. Actions
+
+**Actions** are used for asynchronous, one-to-one communication for long-running tasks. They are similar to services, but they provide **feedback** during execution and are cancellable. This is perfect for tasks like "navigate to a goal," which might take a long time to complete.
+
+**How it works:**
+1.  An **Action Client** sends a **goal** to an **Action Server**.
+2.  The Action Server starts executing the task and sends periodic **feedback** to the client (e.g., distance to goal).
+3.  When the task is finished, the server sends a final **result**.
+
+#### d. Parameters
+
+**Parameters** allow you to configure nodes at runtime without changing the code. Each node can have a set of parameters (e.g., `wheel_radius`, `camera_resolution`) that can be get or set from the command line or other nodes.
+
+---
+
+## 4. Hands-On: Your First ROS 2 Package
+
+Let's put these concepts into practice by creating a simple publisher/subscriber system.
+
+### Step 1: Create a ROS 2 Workspace
+
+A workspace is a directory where you store your ROS 2 packages.
+
+<Tabs>
+  <TabItem value="linux" label="Linux/macOS" default>
+    ```bash
+    mkdir -p ~/ros2_ws/src
+    cd ~/ros2_ws
+    ```
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+    ```powershell
+    mkdir ros2_ws\src
+    cd ros2_ws
+    ```
+  </TabItem>
+</Tabs>
+
+### Step 2: Create a ROS 2 Package
+
+Now, let's create a new package named `my_first_package` inside the `src` directory.
+
+<Tabs>
+  <TabItem value="linux" label="Linux/macOS" default>
+    ```bash
+    cd src
+    ros2 pkg create --build-type ament_python my_first_package
+    ```
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+    ```powershell
+    cd src
+    ros2 pkg create --build-type ament_python my_first_package
+    ```
+  </TabItem>
+</Tabs>
+
+This creates a new directory with all the necessary files for a Python-based ROS 2 package.
+
+### Step 3: Write the Publisher Node
+
+Create a new file named `publisher_node.py` inside `my_first_package/my_first_package/`.
+
+```python
+# my_first_package/my_first_package/publisher_node.py
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MyPublisher(Node):
+    def __init__(self):
+        super().__init__('my_publisher')
+        self.publisher_ = self.create_publisher(String, 'chatter', 10)
+        self.timer = self.create_timer(0.5, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = f'Hello World: {self.i}'
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}"')
+        self.i += 1
+
+def main(args=None):
+    rclpy.init(args=args)
+    my_publisher = MyPublisher()
+    rclpy.spin(my_publisher)
+    my_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+### Step 4: Write the Subscriber Node
+
+Create another file named `subscriber_node.py` in the same directory.
+
+```python
+# my_first_package/my_first_package/subscriber_node.py
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MySubscriber(Node):
+    def __init__(self):
+        super().__init__('my_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'chatter',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info(f'I heard: "{msg.data}"')
+
+def main(args=None):
+    rclpy.init(args=args)
+    my_subscriber = MySubscriber()
+    rclpy.spin(my_subscriber)
+    my_subscriber.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+### Step 5: Add Entry Points
+
+To make these nodes executable, you need to add them to `setup.py`.
+
+```python
+# my_first_package/setup.py
+# ... (other parts of the file)
+    entry_points={
+        'console_scripts': [
+            'my_publisher = my_first_package.publisher_node:main',
+            'my_subscriber = my_first_package.subscriber_node:main',
+        ],
+    },
+# ...
+```
+
+### Step 6: Build and Run
+
+Navigate back to the root of your workspace (`ros2_ws`) and build your package.
+
+<Tabs>
+  <TabItem value="linux" label="Linux/macOS" default>
+    ```bash
+    cd ~/ros2_ws
+    colcon build
+    source install/setup.bash
+    ```
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+    ```powershell
+    cd ..\..
+    colcon build
+    call install/setup.bat
+    ```
+  </TabItem>
+</Tabs>
+
+Now, run the publisher in one terminal:
+```bash
+ros2 run my_first_package my_publisher
+```
+
+And the subscriber in another terminal:
+```bash
+ros2 run my_first_package my_subscriber
+```
+
+You should see the publisher sending messages and the subscriber receiving them!
+
+---
+
+## 5. ROS 2 Command-Line Tools
+
+ROS 2 provides a powerful set of command-line tools to inspect and interact with your system.
+
+-   `ros2 node list`: See all running nodes.
+-   `ros2 topic list`: List all active topics.
+-   `ros2 topic echo /chatter`: See the messages being published on the `/chatter` topic.
+-   `ros2 run <package_name> <executable_name>`: Execute a node.
+
+---
+
+## 6. Launch Files
+
+Starting each node in a separate terminal is tedious. **Launch files** allow you to start and configure a whole system of nodes with a single command.
+
+Create a file named `my_launch.py` in a new `launch` directory inside your package.
+
+```python
+# my_first_package/launch/my_launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='my_first_package',
+            executable='my_publisher',
+            name='my_publisher'
+        ),
+        Node(
+            package='my_first_package',
+            executable='my_subscriber',
+            name='my_subscriber'
+        ),
+    ])
+```
+
+You'll also need to tell the build system about the launch file by adding this to `setup.py`:
+```python
+# In setup.py
+import os
+from glob import glob
+# ...
+    data_files=[
+        # ...
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.py'))
+    ],
+# ...
+```
+
+After rebuilding with `colcon build`, you can run your entire system with:
+```bash
+ros2 launch my_first_package my_launch.py
+```
+
+---
+
+## 7. Summary & Key Takeaways
+
+-   **ROS 2** is a modular framework for building robotic systems.
+-   **Nodes** are the fundamental building blocks, each with a single purpose.
+-   **Topics**, **Services**, and **Actions** are the primary communication patterns.
+-   **Command-line tools** like `ros2 run` and `ros2 topic echo` are essential for debugging.
+-   **Launch files** simplify the process of running complex systems.
+
+## 8. Chapter Quiz
+
+1.  What is the primary communication pattern for streaming data like sensor readings?
+    a) Services
+    b) Topics
+    c) Actions
+    d) Parameters
+
+2.  Which command would you use to see the data being published on a topic named `/scan`?
+    a) `ros2 node list`
+    b) `ros2 topic info /scan`
+    c) `ros2 topic echo /scan`
+    d) `ros2 run /scan`
+
+3.  What is the main advantage of using Actions over Services?
+    a) They are synchronous.
+    b) They can't be cancelled.
+    c) They provide feedback during execution.
+    d) They are faster.
+
+4.  What is the purpose of a `colcon build` command?
+    a) To create a new package.
+    b) To compile and install all packages in a workspace.
+    c) To run a single node.
+    d) To clean the workspace.
+
+5.  A ROS 2 node is typically responsible for:
+    a) Running the entire robotic system.
+    b) A single, well-defined task.
+    c) Only handling hardware drivers.
+    d) Storing configuration data.
+
+*(Answers: 1-b, 2-c, 3-c, 4-b, 5-b)*
+
+## 9. Further Study
+
+-   [ROS 2 Documentation](https://docs.ros.org/en/humble/index.html)
+-   [ROS 2 Tutorials](https://docs.ros.org/en/humble/Tutorials.html)

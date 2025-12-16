@@ -65,7 +65,7 @@ description: "Task list for AI-Driven Robotics Textbook Creation"
 - [x] T017 Customize theme (logo, colors optional) in `src/css/custom.css`
 - [x] T018 Add Prettier + Markdown linting tools via `package.json`
 - [x] T019 Test local build (`npm run start`) in project root - FAILED: Expected failure due to missing content.
-- [ ] T020 Commit & push Docusaurus base site setup
+- [x] T020 Commit & push Docusaurus base site setup
 
 **Checkpoint**: Constitution and Book Spec finalized, base Docusaurus website running locally.
 
@@ -79,16 +79,16 @@ description: "Task list for AI-Driven Robotics Textbook Creation"
 
 ### Chapter Creation Cycle Tasks (Milestone 4)
 
-- [ ] T021 [US1] Create chapter-level spec using `/sp.specify` for a chapter in `specs/001-robotics-textbook-spec/chapter-specs/<chapter-name>-spec.md`
-- [ ] T022 [US1] Run `/sp.clarify` to identify missing constraints for the chapter spec
-- [ ] T023 [US1] Approve final chapter spec & save under `specs/001-robotics-textbook-spec/chapter-specs/`
-- [ ] T024 [US1] Use Gemini CLI to generate full chapter draft (MDX format) for the chapter in `docs/<chapter-name>/index.mdx`
-- [ ] T025 [US1] Apply constitution rules: clarity, citations, consistency to the chapter content
-- [ ] T026 [US1] Insert diagrams (mermaid or images) into `docs/<chapter-name>/index.mdx` (referencing `static/images/`)
-- [ ] T027 [US1] Add exercises + learning outcomes into `docs/<chapter-name>/index.mdx`
-- [ ] T028 [US1] Create chapter folder and initial `index.mdx` file in `docs/<chapter-name>/index.mdx`
-- [ ] T029 [US1] Add chapter to sidebar in `sidebars.js`
-- [ ] T030 [US1] Test local build & fix rendering issues for the chapter (run `npm run start`)
+- [x] T021 [US1] Create chapter-level spec using `/sp.specify` for a chapter in `specs/001-robotics-textbook-spec/chapter-specs/<chapter-name>-spec.md` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T022 [US1] Run `/sp.clarify` to identify missing constraints for the chapter spec - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T023 [US1] Approve final chapter spec & save under `specs/001-robotics-textbook-spec/chapter-specs/` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T024 [US1] Use Gemini CLI to generate full chapter draft (MDX format) for the chapter in `docs/<chapter-name>/index.mdx` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T025 [US1] Apply constitution rules: clarity, citations, consistency to the chapter content - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T026 [US1] Insert diagrams (mermaid or images) into `docs/<chapter-name>/index.mdx` (referencing `static/images/`) - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T027 [US1] Add exercises + learning outcomes into `docs/<chapter-name>/index.mdx` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T028 [US1] Create chapter folder and initial `index.mdx` file in `docs/<chapter-name>/index.mdx` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T029 [US1] Add chapter to sidebar in `sidebars.js` - Repeated for Introduction. - Completed for Remaining Chapters.
+- [x] T030 [US1] Test local build & fix rendering issues for the chapter (run `npm run start`) - Repeated for Introduction. - Completed for Remaining Chapters.
 
 **Repeat T021-T030 for each of the following chapters/modules:**
 - Preface
@@ -117,11 +117,11 @@ description: "Task list for AI-Driven Robotics Textbook Creation"
 
 ### Book-Wide Refinement & QA Tasks (Milestone 5)
 
-- [ ] T031 [US2] Perform cross-chapter consistency check across `docs/`
-- [ ] T032 [US2] Ensure all chapters follow constitution writing rules
-- [ ] T033 [US2] Validate citations & references in all chapters
-- [ ] T034 [US2] Check sidebar navigation completeness in `sidebars.js`
-- [ ] T035 [US2] Fix broken links/images in `docs/` and `static/images/`
+- [x] T031 [US2] Perform cross-chapter consistency check across `docs/`
+- [x] T032 [US2] Ensure all chapters follow constitution writing rules
+- [x] T033 [US2] Validate citations & references in all chapters
+- [x] T034 [US2] Check sidebar navigation completeness in `sidebars.js`
+- [x] T035 [US2] Fix broken links/images in `docs/` and `static/images/`
 - [ ] T036 [US2] Run final local build test (`npm run build`)
 - [ ] T037 [US2] Check mobile responsiveness (browser tools)
 

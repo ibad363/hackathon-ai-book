@@ -15,71 +15,89 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
-    'intro', // Introduction to the textbook, currently mapped to intro.md
+    {
+      type: 'category',
+      label: 'Introduction to Book',
+      link: { type: 'generated-index' },
+      items: ['intro/index'], // Original intro.md will be moved to intro/index.mdx
+    },
     {
       type: 'category',
       label: 'Preface',
-      items: ['preface'], // Placeholder for Preface
+      link: { type: 'generated-index' },
+      items: ['preface/index'], // Links to docs/preface/index.mdx
     },
     {
       type: 'category',
       label: 'Introduction to Physical AI',
-      items: ['introduction'], // Placeholder for Introduction
+      link: { type: 'generated-index' },
+      items: ['introduction/introduction'], // Links to docs/introduction/index.mdx with id: introduction
     },
     {
       type: 'category',
       label: 'Module 1 - ROS 2 Fundamentals',
-      items: ['modules/ros2/intro'], // Placeholder for ROS 2 module
+      link: { type: 'generated-index' },
+      items: ['modules/ros2/index'],
     },
     {
       type: 'category',
       label: 'Module 2 - Gazebo & Unity Simulation',
-      items: ['modules/gazebo-unity/intro'], // Placeholder for Gazebo & Unity module
+      link: { type: 'generated-index' },
+      items: ['modules/gazebo-unity/index'],
     },
     {
       type: 'category',
       label: 'Module 3 - NVIDIA Isaac Platform',
-      items: ['modules/isaac/intro'], // Placeholder for NVIDIA Isaac module
+      link: { type: 'generated-index' },
+      items: ['modules/isaac/index'],
     },
     {
       type: 'category',
       label: 'Module 4 - Vision-Language-Action Systems',
-      items: ['modules/vla/intro'], // Placeholder for VLA module
+      link: { type: 'generated-index' },
+      items: ['modules/vla/index'],
     },
     {
       type: 'category',
       label: 'Weekly Breakdown',
-      items: ['weekly-breakdown'], // Placeholder for Weekly Breakdown
+      link: { type: 'generated-index' },
+      items: ['weekly-breakdown/index'],
     },
     {
       type: 'category',
       label: 'Assessments',
-      items: ['assessments'], // Placeholder for Assessments
+      link: { type: 'generated-index' },
+      items: ['assessments/index'],
     },
     {
       type: 'category',
       label: 'Hardware Requirements',
-      items: ['hardware-requirements'], // Placeholder for Hardware Requirements
+      link: { type: 'generated-index' },
+      items: ['hardware-requirements/index'],
     },
     {
       type: 'category',
       label: 'Lab Setup Guide',
-      items: ['lab-setup-guide'], // Placeholder for Lab Setup Guide
+      link: { type: 'generated-index' },
+      items: ['lab-setup-guide/index'],
     },
     {
       type: 'category',
       label: 'Capstone “Autonomous Humanoid” Project',
-      items: ['capstone-project'], // Placeholder for Capstone Project
+      link: { type: 'generated-index' },
+      items: ['capstone-project/index'],
     },
     {
       type: 'category',
       label: 'Glossary',
-      items: ['glossary'], // Placeholder for Glossary
+      link: { type: 'generated-index' },
+      items: ['glossary/index'],
     },
     {
       type: 'category',
       label: 'References',
-      items: ['references'], // Placeholder for References
+      link: { type: 'generated-index' },
+      items: ['references/index'],
     },
   ],
 

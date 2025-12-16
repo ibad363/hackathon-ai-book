@@ -1,0 +1,51 @@
+---
+title: Hardware Requirements
+slug: /hardware-requirements
+---
+
+# Hardware Requirements
+
+This course involves computationally intensive tasks, particularly in simulation and AI model training. To ensure you have a smooth learning experience, please review the following hardware requirements.
+
+---
+
+## 1. Minimum Requirements
+
+This setup will allow you to complete the foundational parts of the course, but you may experience slow performance in more complex simulations.
+
+-   **Operating System**: **Ubuntu 22.04 (Jammy Jellyfish)**. A dual-boot or native installation is strongly recommended over a virtual machine (VM).
+-   **CPU**: Intel Core i5 or AMD Ryzen 5 (quad-core, ~2.5 GHz) or better.
+-   **RAM**: 16 GB.
+-   **Storage**: 50 GB of free space.
+-   **GPU**: Any integrated or discrete GPU that supports OpenGL 3.3.
+
+#### What you can do with the minimum requirements:
+-   You will be able to complete all the **ROS 2** exercises.
+-   You will be able to run simple to moderately complex **Gazebo** simulations.
+-   You will **NOT** be able to run **NVIDIA Isaac Sim**.
+
+---
+
+## 2. Recommended Requirements
+
+This setup will allow you to comfortably run all simulations and take full advantage of the AI and perception modules.
+
+-   **Operating System**: **Ubuntu 22.04 (Jammy Jellyfish)** (native installation).
+-   **CPU**: Intel Core i7 / Core i9 or AMD Ryzen 7 / Ryzen 9 (6-core or 8-core, ~3.0 GHz) or better.
+-   **RAM**: 32 GB or more.
+-   **Storage**: 100 GB of free space on a **Solid State Drive (SSD)**.
+-   **GPU**: **NVIDIA RTX 3060 or better**. An RTX 3070, 3080, 4070, or higher is strongly recommended for a smooth experience in Isaac Sim.
+
+#### What you can do with the recommended requirements:
+-   You will be able to comfortably run all simulations, including complex Gazebo worlds and the **NVIDIA Isaac Sim** platform.
+-   You will be able to take full advantage of **GPU acceleration** for perception tasks in Isaac ROS and for training AI models.
+
+---
+
+## 3. A Note on Other Operating Systems
+
+### Apple Silicon (M1/M2/M3)
+While it is technically possible to run ROS 2 on Apple Silicon via virtualization or containerization, it is **not officially supported** for this course. You are very likely to encounter significant compatibility and performance issues, especially with GPU-accelerated tasks. NVIDIA-specific software, such as Isaac Sim, will not run at all. **Proceed at your own risk.**
+
+### Windows
+ROS 2 has official support for Windows, and you can follow most of the tutorials. However, the broader robotics ecosystem, including many community packages and tools, is developed and tested primarily on Linux. For a smoother, less frustrating learning experience, a native Ubuntu installation is strongly recommended. If you must use Windows, consider using **Windows Subsystem for Linux (WSL) 2**, but be aware that you may face challenges with running GUI applications (like Gazebo and RViz) and ensuring proper hardware acceleration.

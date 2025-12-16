@@ -9,34 +9,32 @@ type FeatureItem = {
   description: ReactNode;
 };
 
+// TODO: Replace these with more relevant icons for the robotics textbook
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Foundational Concepts',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Learn the core principles of modern robotics, including ROS 2, simulation with Gazebo and Unity, and robot kinematics.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'AI for Robotics',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Explore the cutting edge of AI in robotics, from computer vision and perception to advanced Vision-Language-Action (VLA) models.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Hands-On Learning',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Put theory into practice with hands-on exercises, simulation-based projects, and a final capstone project to build an autonomous humanoid robot.
       </>
     ),
   },

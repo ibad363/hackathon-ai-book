@@ -1,0 +1,141 @@
+---
+title: Lab Setup Guide
+slug: /lab-setup-guide
+---
+
+# Lab Setup Guide: Preparing Your Development Environment
+
+This guide provides a comprehensive, step-by-step walkthrough for setting up the software environment required for this course. Following these instructions carefully is crucial for a smooth learning experience.
+
+---
+
+## 1. Install Ubuntu 22.04 (Jammy Jellyfish)
+
+The entire robotics ecosystem, especially ROS, is developed and tested primarily on Linux. We strongly recommend a native Ubuntu 22.04 installation.
+
+-   **Recommendation**: Install Ubuntu in a **dual-boot** configuration alongside your existing Windows or macOS, or as the sole operating system on your machine.
+-   **Avoid**: Using a Virtual Machine (VM) is not recommended as you will likely encounter significant performance issues and problems with USB device passthrough and GPU acceleration.
+
+**Follow the official Ubuntu tutorial to create a bootable USB and install Ubuntu:**
+-   [Install Ubuntu desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop)
+
+---
+
+## 2. Install ROS 2 Humble Hawksbill
+
+ROS 2 Humble is the designated ROS 2 version for Ubuntu 22.04. These steps follow the official ROS 2 documentation.
+
+### Step 2.1: Set Locale
+Ensure your system locale supports UTF-8.
+```bash
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+```
+
+### Step 2.2: Add ROS 2 APT Repository
+Add the ROS 2 repository to your system's package sources.
+```bash
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+```
+
+### Step 2.3: Install ROS 2 Packages
+This command installs the full desktop version of ROS 2, including demos, tutorials, and **Gazebo**.
+```bash
+sudo apt update
+sudo apt install ros-humble-desktop-full
+```
+
+### Step 2.4: Source the Setup File
+To use the ROS 2 commands, you need to source the setup file in your terminal. It's best to add this to your `.bashrc` file so it's done automatically in every new terminal.
+```bash
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Step 2.5: Test your Installation
+Run a simple talker/listener example. Open two terminals.
+In the first terminal, run the talker:
+```bash
+ros2 run demo_nodes_cpp talker
+```
+In the second terminal, run the listener:
+```bash
+ros2 run demo_nodes_py listener
+```
+You should see the listener printing messages from the talker.
+
+---
+
+## 3. Install Gazebo and `ros_gz` Bridge
+
+Gazebo should have been installed as part of the `ros-humble-desktop-full` package. Now, install the necessary packages to bridge ROS 2 and Gazebo.
+
+```bash
+sudo apt update
+sudo apt install ros-humble-ros-gz
+```
+
+### Test your Gazebo Installation
+Launch a simple Gazebo world:
+```bash
+gazebo /opt/ros/humble/share/gazebo/worlds/pioneer2dx.world
+```
+
+---
+
+## 4. Install NVIDIA Isaac Sim
+
+If you have an NVIDIA RTX GPU (as per the **Recommended Requirements**), you can install Isaac Sim.
+
+### Step 4.1: Install NVIDIA Drivers
+Ensure you have the latest proprietary NVIDIA drivers installed. You can do this through Ubuntu's "Software & Updates" application (`Additional Drivers` tab).
+
+### Step 4.2: Install Omniverse Launcher
+1.  Go to the [NVIDIA Omniverse website](https://www.nvidia.com/en-us/omniverse/).
+2.  Download and install the **Omniverse Launcher** for Linux.
+
+### Step 4.3: Install Isaac Sim
+1.  Open the Omniverse Launcher.
+2.  In the "Exchange" tab, search for "Isaac Sim."
+3.  Click on Isaac Sim and select "Install." Choose the latest available version.
+
+---
+
+## 5. Set Up Your ROS 2 Workspace
+
+A ROS 2 workspace is a directory where you will create and manage your own ROS 2 packages.
+
+### Step 5.1: Create the Workspace
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+```
+
+### Step 5.2: Clone Course Examples (Optional)
+If a repository with course examples is provided, you would clone it into your `src` directory.
+```bash
+# Example:
+# git clone <repository_url> ~/ros2_ws/src/course_examples
+```
+
+### Step 5.3: Build the Workspace
+`colcon` is the ROS 2 build tool. Run it from the root of your workspace.
+```bash
+cd ~/ros2_ws
+colcon build
+```
+
+### Step 5.4: Source the Workspace
+After building, you need to source the local setup file to make your new packages available.
+```bash
+echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+Your development environment is now ready!

@@ -1,0 +1,237 @@
+---
+title: Module 2 - Gazebo & Unity Simulation
+slug: /modules/gazebo-unity
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Module 2: The Digital Twin - Gazebo & Unity Simulation
+
+Before a robot can operate in the real world, it needs a safe, controlled environment for development, testing, and training. This is the role of a simulator—to create a **digital twin** of the robot and its environment. This chapter explores two of the most powerful simulation platforms in robotics: **Gazebo** and **Unity**.
+
+## 1. Learning Objectives
+
+-   **Explain** the critical role of simulation in modern robotics.
+-   **Differentiate** between Gazebo and Unity as simulation platforms.
+-   **Understand** the key features and architecture of both simulators.
+-   **Create** a simple world in Gazebo and spawn a robot model.
+-   **Understand** the basics of connecting ROS 2 with Gazebo and Unity.
+-   **Identify** the pros and cons of each simulator for various robotics tasks.
+
+---
+
+## 2. The Importance of Simulation in Robotics
+
+Why not just test on real hardware? While physical testing is the ultimate goal, simulation offers indispensable advantages:
+
+-   **Safety**: Testing new algorithms on a physical robot can be dangerous, especially with early-stage, unpredictable code. Simulators provide a sandbox where failures have no real-world consequences.
+-   **Cost-Effectiveness**: Simulators are free. Physical robots and sensors can cost thousands or millions of dollars. Crashing a simulated robot costs nothing.
+-   **Speed**: You can run simulations faster than real-time to quickly gather data or test long-duration tasks.
+-   **Parallelization**: You can run thousands of simulations in parallel on a cloud server to train AI models (Reinforcement Learning) on a massive scale.
+-   **Perfect Perception**: Simulators can provide "ground truth" data that is impossible to get from real sensors, such as the exact position of every object in the environment.
+
+---
+
+## 3. Introduction to Gazebo
+
+**Gazebo** is a free, open-source, and robust physics simulator for robotics. It is one of the most widely used simulators in the ROS community, designed specifically for robotics research, development, and testing.
+
+### Gazebo Architecture
+
+A Gazebo simulation is composed of several key components:
+
+-   **World**: The entire simulated environment, including objects, lighting, and physics properties. Described in a `.sdf` file.
+-   **Models**: Any object in the world, from a simple shape to a complex robot. Models are also described using SDF.
+-   **Sensors**: Special types of models that generate data, like cameras, LiDAR, and IMUs.
+-   **Plugins**: Custom code that can be attached to models or sensors to control their behavior or generate data.
+
+```mermaid
+graph TD
+    subgraph Gazebo World (.sdf)
+        A[Physics Engine]
+        B[Lighting]
+        C[Environment]
+    end
+
+    subgraph Robot Model (SDF)
+        D[Links<br/>(Rigid Bodies)]
+        E[Joints<br/>(Connect Links)]
+        F[Sensors<br/>(Camera, LiDAR)]
+        G[Plugins<br/>(To control joints or publish sensor data)]
+    end
+
+    A -- Affects --> D
+    F -- Generates Data --> G
+    C -- Interacts with --> D
+```
+*Figure 1: High-level architecture of a Gazebo simulation.*
+
+### The Simulation Description Format (SDF)
+
+Gazebo uses SDF to define everything from worlds to robots. It's an XML-based format that describes the physical properties (mass, inertia), visual properties (color, shape), and collision properties of objects.
+
+### Hands-On: A Simple Gazebo World
+
+1.  **Create a World File**: Create a file named `simple.world`.
+
+    ```xml
+    <?xml version="1.0" ?>
+    <sdf version="1.7">
+      <world name="default">
+        <include>
+          <uri>model://sun</uri>
+        </include>
+        <include>
+          <uri>model://ground_plane</uri>
+        </include>
+        <model name="box">
+          <pose>0 0 0.5 0 0 0</pose>
+          <link name="link">
+            <collision name="collision">
+              <geometry><box><size>1 1 1</size></box></geometry>
+            </collision>
+            <visual name="visual">
+              <geometry><box><size>1 1 1</size></box></geometry>
+            </visual>
+          </link>
+        </model>
+      </world>
+    </sdf>
+    ```
+
+2.  **Run Gazebo**: Open a terminal and run Gazebo with your world file.
+
+    ```bash
+    gazebo simple.world
+    ```
+
+You should see a simple world with a ground plane, lighting, and a floating cube.
+
+---
+
+## 4. Introduction to Unity for Robotics
+
+**Unity** is a professional game engine that has been increasingly adopted by the robotics community for its high-fidelity graphics, powerful physics engines, and ease of use.
+
+### Key Unity Features for Robotics
+
+-   **High-Fidelity Graphics**: Unity is renowned for its photorealistic rendering capabilities, making it ideal for training computer vision models that need to work in the real world.
+-   **Unity Robotics Hub**: A set of open-source packages that makes it easy to connect Unity simulations with ROS 2.
+-   **Physics Engines**: Unity supports multiple physics engines, including NVIDIA's PhysX and the more specialized Havok physics engine.
+-   **Asset Store**: A massive marketplace of 3D models, environments, and tools that can be quickly integrated into your simulation.
+
+### Hands-On: A Simple Unity Scene
+
+Setting up a Unity scene involves using the graphical editor:
+1.  **Install Unity Hub** and a recent version of the Unity Editor.
+2.  **Create a new 3D project**.
+3.  **Add a Plane** to act as the ground (`GameObject -> 3D Object -> Plane`).
+4.  **Add a Cube** to act as an object (`GameObject -> 3D Object -> Cube`).
+5.  **Add a Rigidbody** component to the Cube to make it affected by physics.
+6.  Press the "Play" button to start the simulation and see the cube fall onto the plane.
+
+---
+
+## 5. Connecting Simulators with ROS 2
+
+The real power of simulation is realized when you connect it to your robot's brain—ROS 2.
+
+### a. Gazebo & ROS 2 (`ros_gz`)
+
+The `ros_gz` packages provide the bridge between Gazebo and ROS 2.
+
+-   **Gazebo Plugins** publish sensor data (like camera images or laser scans) directly to ROS 2 topics.
+-   **ROS 2 nodes** can control robots in Gazebo by publishing messages to topics that Gazebo plugins are subscribed to (e.g., sending velocity commands to a wheel joint).
+
+```mermaid
+graph TD
+    subgraph Gazebo Simulator
+        A[Camera Sensor Plugin] -- Publishes to --> B(Gazebo Transport);
+    end
+    subgraph ROS 2
+        D[ROS 2 Node<br/>(e.g., /image_processor)]
+    end
+    subgraph Bridge
+      C[`ros_gz_bridge`]
+    end
+
+    B -- Gazebo Message --> C;
+    C -- ROS 2 Message --> E[ROS 2 Topic<br/>/image_raw];
+    E -- Delivered to --> D;
+```
+*Figure 2: The `ros_gz_bridge` connects Gazebo's transport layer to the ROS 2 graph.*
+
+### b. Unity & ROS 2 (Robotics Hub)
+
+The **Unity Robotics Hub** provides a package called `ROS-TCP-Connector`, which allows Unity to communicate with ROS 2 over a TCP connection.
+
+-   A C# script in Unity can publish sensor data as ROS 2 messages.
+-   Another C# script can subscribe to ROS 2 topics and use the data to control objects in the Unity scene.
+
+---
+
+## 6. Choosing the Right Simulator
+
+| Feature               | Gazebo                                      | Unity                                         |
+| --------------------- | ------------------------------------------- | --------------------------------------------- |
+| **Primary Use Case**  | Physics-heavy simulation, robotics research | High-fidelity rendering, CV/ML model training |
+| **Physics Fidelity**  | Good, multiple engines (ODE, DART)          | Very good (PhysX, Havok)                      |
+| **Graphics Quality**  | Basic to moderate                           | Photorealistic                                |
+| **ROS 2 Integration** | Excellent, native (`ros_gz`)                | Very good (Robotics Hub)                      |
+| **Community**         | Strong in the ROS/robotics community        | Massive in the gaming/real-time 3D community  |
+| **Cost**              | Free and Open Source                        | Free for personal use, paid for enterprises   |
+
+**Rule of thumb:**
+-   If your focus is on dynamics, control systems, and traditional robotics algorithms, **Gazebo** is often the best choice.
+-   If your focus is on computer vision, training AI models in photorealistic worlds, or creating public-facing demos, **Unity** is a superior option.
+
+---
+
+## 7. Summary & Key Takeaways
+
+-   Simulation is an essential tool for safe, fast, and cost-effective robotics development.
+-   **Gazebo** is a powerful, open-source physics simulator with deep roots in the ROS community.
+-   **Unity** is a professional game engine with stunning graphics, making it ideal for vision-based AI training.
+-   Both simulators can be tightly integrated with ROS 2 to create a complete software-in-the-loop (SIL) system.
+-   The choice of simulator depends on your specific project goals.
+
+## 8. Chapter Quiz
+
+1.  What is the primary benefit of using simulation for training a Reinforcement Learning agent?
+    a) It looks better than the real world.
+    b) It allows for massive parallelization and faster-than-real-time execution.
+    c) It is more expensive.
+    d) It is required by ROS 2.
+
+2.  What format does Gazebo use to describe worlds and models?
+    a) XML
+    b) JSON
+    c) URDF
+    d) SDF
+
+3.  What is the main advantage of using Unity for robotics simulation?
+    a) It is fully open source.
+    b) It has the most accurate physics engine by default.
+    c) It offers high-fidelity, photorealistic graphics.
+    d) It has native integration with ROS 1 only.
+
+4.  The `ros_gz` packages are used to:
+    a) Bridge communication between ROS 2 and Gazebo.
+    b) Run Unity simulations from the command line.
+    c) Define robot models.
+    d) Replace the ROS 2 build system.
+
+5.  You are developing a self-driving car algorithm that relies heavily on camera data and needs to be trained in many different realistic lighting and weather conditions. Which simulator would be the better choice?
+    a) Gazebo, because it has better physics.
+    b) Unity, because of its high-fidelity graphics.
+    c) Either would be equally good.
+    d) Neither, you must use real-world data.
+
+*(Answers: 1-b, 2-d, 3-c, 4-a, 5-b)*
+
+## 9. Further Study
+
+-   [Gazebo Simulator](https://gazebosim.org/)
+-   [Unity Robotics Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub)
+-   [ROS 2 & Gazebo Integration (`ros_gz`)](https://github.com/gazebosim/ros_gz)

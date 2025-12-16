@@ -15,90 +15,88 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
+    // Top-level introduction to the book
+    'intro/index', 
+    'preface/index',
+
+    // A new "Modules" category to group all the learning modules
     {
       type: 'category',
-      label: 'Introduction to Book',
-      link: { type: 'generated-index' },
-      items: ['intro/index'], // Original intro.md will be moved to intro/index.mdx
+      label: 'Core Modules',
+      link: {
+        type: 'generated-index',
+        title: 'Core Learning Modules',
+        description: 'These modules cover the fundamental concepts of Physical AI and Humanoid Robotics.',
+      },
+      items: [
+        {
+          type: 'doc',
+          id: 'modules/ros2/index',
+          label: 'Module 1 - ROS 2 Fundamentals',
+        },
+        {
+          type: 'doc',
+          id: 'modules/gazebo-unity/index',
+          label: 'Module 2 - Gazebo & Unity Simulation',
+        },
+        {
+          type: 'doc',
+          id: 'modules/isaac/index',
+          label: 'Module 3 - NVIDIA Isaac Platform',
+        },
+        {
+          type: 'doc',
+          id: 'modules/vla/index',
+          label: 'Module 4 - Vision-Language-Action Systems',
+        },
+      ],
     },
+
+    // A new "Course Information" category for all the supporting materials
     {
       type: 'category',
-      label: 'Preface',
-      link: { type: 'generated-index' },
-      items: ['preface/index'], // Links to docs/preface/index.mdx
+      label: 'Course Information',
+      link: {
+        type: 'generated-index',
+        title: 'Course Information',
+        description: 'All the supporting materials for the course.',
+      },
+      items: [
+        'weekly-breakdown/index',
+        'hardware-requirements/index',
+        'lab-setup-guide/index',
+      ],
     },
+    
+    // A new "Projects & Assessments" category
     {
-      type: 'category',
-      label: 'Introduction to Physical AI',
-      link: { type: 'generated-index' },
-      items: ['introduction/introduction'], // Links to docs/introduction/index.mdx with id: introduction
+        type: 'category',
+        label: 'Projects & Assessments',
+        link: {
+            type: 'generated-index',
+            title: 'Projects & Assessments',
+            description: 'Apply your knowledge with these hands-on projects.',
+        },
+        items: [
+            'assessments/index',
+            'capstone-project/index',
+        ],
     },
+
+    // A new "Reference" category for glossary and references
     {
-      type: 'category',
-      label: 'Module 1 - ROS 2 Fundamentals',
-      link: { type: 'generated-index' },
-      items: ['modules/ros2/index'],
-    },
-    {
-      type: 'category',
-      label: 'Module 2 - Gazebo & Unity Simulation',
-      link: { type: 'generated-index' },
-      items: ['modules/gazebo-unity/index'],
-    },
-    {
-      type: 'category',
-      label: 'Module 3 - NVIDIA Isaac Platform',
-      link: { type: 'generated-index' },
-      items: ['modules/isaac/index'],
-    },
-    {
-      type: 'category',
-      label: 'Module 4 - Vision-Language-Action Systems',
-      link: { type: 'generated-index' },
-      items: ['modules/vla/index'],
-    },
-    {
-      type: 'category',
-      label: 'Weekly Breakdown',
-      link: { type: 'generated-index' },
-      items: ['weekly-breakdown/index'],
-    },
-    {
-      type: 'category',
-      label: 'Assessments',
-      link: { type: 'generated-index' },
-      items: ['assessments/index'],
-    },
-    {
-      type: 'category',
-      label: 'Hardware Requirements',
-      link: { type: 'generated-index' },
-      items: ['hardware-requirements/index'],
-    },
-    {
-      type: 'category',
-      label: 'Lab Setup Guide',
-      link: { type: 'generated-index' },
-      items: ['lab-setup-guide/index'],
-    },
-    {
-      type: 'category',
-      label: 'Capstone “Autonomous Humanoid” Project',
-      link: { type: 'generated-index' },
-      items: ['capstone-project/index'],
-    },
-    {
-      type: 'category',
-      label: 'Glossary',
-      link: { type: 'generated-index' },
-      items: ['glossary/index'],
-    },
-    {
-      type: 'category',
-      label: 'References',
-      link: { type: 'generated-index' },
-      items: ['references/index'],
-    },
+        type: 'category',
+        label: 'Reference',
+        link: {
+            type: 'generated-index',
+            title: 'Reference Materials',
+            description: 'A glossary of terms and a list of references for further study.',
+        },
+        items: [
+            'glossary/index',
+            'references/index',
+        ],
+    }
   ],
 
   // But you can create a sidebar manually

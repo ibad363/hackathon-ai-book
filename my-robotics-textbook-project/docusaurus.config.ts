@@ -18,12 +18,12 @@ const config: Config = {
   url: 'https://ibad363.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/ai-book-new',
+  baseUrl: '/hackathon-ai-book',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'ibad363', // Usually your GitHub org/user name.
-  projectName: 'ai-book-new', // Usually your repo name.
+  projectName: 'hackathon-ai-book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 

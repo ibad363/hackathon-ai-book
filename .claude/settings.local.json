@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"$feature_description = Get-Content -Raw ''temp_feature_description.md''; .specify/scripts/bash/create-new-feature.sh --json --number 1 --short-name ''physical-ai-book'' \"\"$feature_description\"\"\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

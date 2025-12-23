@@ -1,0 +1,182 @@
+/sp.specify
+
+### Project Name
+Integrated RAG Chatbot for AI/Spec-Driven Book
+
+---
+
+### Purpose
+Build and embed a Retrieval-Augmented Generation (RAG) chatbot inside an already published **Docusaurus (GitHub Pages)** book.  
+The chatbot must be accessible via a **floating chat button on all pages** and answer user questions **only from the book content**.
+
+The system will use:
+- OpenAI Agents SDK (orchestration only)
+- Gemini API (LLM + embeddings)
+- Qdrant Cloud (Free Tier) for vector search
+- Neon Serverless Postgres for chat history
+- FastAPI backend deployed on Render
+
+---
+
+### Deployed Book URL
+https://ibad363.github.io/hackathon-ai-book/
+
+---
+
+## Primary Deliverables
+
+1. FastAPI backend implementing a complete RAG pipeline  
+2. OpenAI Agents SDK–based agent using Gemini as the model  
+3. Qdrant Cloud vector database populated with book content  
+4. Neon Serverless Postgres for chat sessions and message history  
+5. Backend deployed on Render with public HTTPS endpoint  
+6. Floating chatbot UI embedded on **all Docusaurus pages**  
+7. Full-book question answering (no selected-text mode, no chat page)
+
+---
+
+## Functional Requirements
+
+### FR-1: Backend API
+
+The backend must expose the following endpoints:
+
+#### `POST /ingest`
+- Ingest book markdown content
+- Chunk content by headings or sections
+- Generate embeddings using Gemini
+- Store vectors in Qdrant with metadata
+
+#### `POST /chat`
+- Accept user query
+- Retrieve top-K relevant chunks from Qdrant
+- Generate answer strictly from retrieved context
+- Persist conversation history in Neon
+
+---
+
+### FR-2: RAG Pipeline
+
+The system must implement the following RAG flow:
+
+1. Parse and chunk book content logically  
+2. Generate embeddings using Gemini API  
+3. Store embeddings in Qdrant Cloud  
+4. Retrieve top-K relevant chunks per user query  
+5. Pass retrieved context to Gemini via an Agent  
+6. Generate grounded response  
+7. If no relevant context is found, respond with **“I don’t know”**
+
+---
+
+### FR-3: Agent Usage (OpenAI Agents SDK)
+
+The chatbot must:
+
+- Use OpenAI Agents SDK for orchestration only  
+- Use Gemini as the underlying LLM and embedding model  
+- Enforce system rules:
+  - Answer only from provided context  
+  - Do not use external knowledge  
+  - Say “I don’t know” when the answer is not in the context  
+- Support multi-turn conversations using stored history
+
+---
+
+### FR-4: Database Requirements
+
+#### Qdrant Cloud (Free Tier)
+- Store vector embeddings
+- Store metadata:
+  - page
+  - heading
+  - chunk_id
+
+#### Neon Serverless Postgres
+- Store:
+  - chat_sessions
+  - user_messages
+  - assistant_messages
+  - timestamps
+
+---
+
+### FR-5: Deployment
+
+- Backend must be deployed on Render  
+- All secrets managed via environment variables  
+- Backend exposed via public HTTPS endpoint  
+- CORS enabled for GitHub Pages frontend  
+
+---
+
+### FR-6: Frontend Integration (Floating Button Only)
+
+The chatbot must be embedded into the Docusaurus site as a **floating chat button**:
+
+- Visible on **all pages** of the book  
+- No dedicated `/chat` page  
+- Button opens a chat panel or modal overlay  
+- Frontend communicates with backend via REST API  
+- UI must support:
+  - User message input  
+  - Display of AI responses  
+  - Loading indicators  
+  - Error handling  
+
+---
+
+## Non-Functional Requirements
+
+### NFR-1: Accuracy
+- Answers must be grounded strictly in book content  
+- No hallucinated or external information  
+
+### NFR-2: Performance
+- Average response time ≤ 3 seconds  
+- Vector retrieval latency ≤ 1 second  
+
+### NFR-3: Security
+- Gemini API key must never be exposed to frontend  
+- Basic rate limiting applied to `/chat` endpoint  
+
+### NFR-4: Maintainability
+The backend must follow a clean folder structure:
+
+backend/
+├─ main.py
+├─ rag/
+│ ├─ ingest.py
+│ ├─ retrieve.py
+│ └─ generate.py
+├─ agents/
+│ └─ book_agent.py
+├─ db/
+│ └─ neon.py
+└─ qdrant/
+└─ client.py
+
+---
+
+## Constraints
+
+- Free tiers only (Qdrant Cloud, Neon, Render)  
+- No OpenAI API key usage  
+- Gemini API only  
+- Backend must be independent from GitHub Pages 
+
+---
+
+## Acceptance Criteria
+
+- Backend successfully deployed on Render  
+- Book content ingested into Qdrant  
+- Floating chat button visible on all book pages  
+- Chatbot correctly answers book-related questions  
+- No answers generated without retrieved context  
+
+---
+
+## Summary
+
+> **Docusaurus Book → Floating Chat Button → FastAPI Backend → RAG (Qdrant) → Agent (Gemini) → Grounded Answer**

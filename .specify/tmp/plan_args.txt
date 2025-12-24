@@ -1,0 +1,82 @@
+# Implementation Plan: Integrated RAG Chatbot
+
+## Objective
+Implement a production-ready Retrieval-Augmented Generation (RAG) chatbot that is embedded as a floating chat button across all pages of a Docusaurus-based book and answers questions strictly using the book’s ingested content.
+
+---
+
+## High-Level Architecture
+
+Docusaurus (Frontend)
+→ Floating Chat Button (JS / React widget)
+→ FastAPI Backend (Render)
+→ RAG Pipeline
+   ├─ Qdrant Cloud (Vector Search)
+   ├─ Gemini API (LLM + Embeddings via Agents SDK)
+   └─ Neon Serverless Postgres (Chat History)
+
+---
+
+## Architecture Decisions
+
+### Backend
+- **Framework**: FastAPI
+- **Deployment**: Render (Free Tier)
+- **Security**: API keys via environment variables
+- **CORS**: Restricted to GitHub Pages domain
+
+### RAG System
+- **Chunking Strategy**: Markdown heading-based chunks
+- **Embeddings**: Gemini embedding model
+- **Vector Store**: Qdrant Cloud (Free Tier)
+- **Retrieval**: Top-K similarity search
+- **Generation**: Gemini chat model orchestrated via OpenAI Agents SDK
+- **Hallucination Control**: Strict system instructions
+
+### Agent Design
+- Single agent responsible for:
+  - Enforcing “answer only from context”
+  - Handling multi-turn conversation
+  - Rejecting out-of-context questions
+
+### Database
+- **Neon Postgres**:
+  - Store chat sessions
+  - Store messages (user + assistant)
+  - Provide conversation history for follow-up questions
+
+### Frontend Integration
+- Floating chat button injected into Docusaurus layout
+- Chat opens as modal or slide-over panel
+- No dedicated `/chat` page
+- Communication via REST (`/chat` endpoint only)
+
+---
+
+## Execution Strategy
+
+1. Build backend RAG service first
+2. Ingest book content and validate retrieval quality
+3. Implement agent logic and grounding rules
+4. Deploy backend to Render
+5. Embed floating chat UI into Docusaurus
+6. Validate end-to-end behavior against acceptance criteria
+
+---
+
+## Risk Mitigation
+
+- **Hallucinations**: Enforced agent system rules + empty-context rejection
+- **Latency**: Limit chunk size and retrieval count
+- **Free Tier Limits**: Minimal embeddings, batch ingestion
+- **Frontend Security**: No API keys exposed
+
+---
+
+## Definition of Done
+
+- Chatbot answers book-related questions accurately
+- “I don’t know” returned for out-of-scope questions
+- Floating chat button visible on all pages
+- Backend deployed and reachable
+- All success criteria from `/sp.specify` satisfied

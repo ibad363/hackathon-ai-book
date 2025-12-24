@@ -5,6 +5,13 @@
 **Status**: Draft
 **Input**: User description: "Integrated RAG Chatbot for AI/Spec-Driven Book"
 
+## Clarifications
+
+### Session 2025-12-24
+
+- Q: How should we handle user privacy and conversation history? → A: History will be stored in the Neon database. The backend will generate an anonymous, unique session ID for each new conversation, which the client will store locally (e.g., in localStorage) and use for subsequent requests to retrieve conversation history. This allows for persistent conversations without requiring a full user authentication system at this stage.
+- Q: What is the expected maximum concurrent user load for the chatbot (number of users simultaneously interacting with the chat interface), and should we implement rate-limiting to prevent abuse or overload? → A: No specific target for concurrent users, no rate-limiting needed.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Access the Chatbot (Priority: P1)
@@ -69,6 +76,14 @@ As a user, when I ask a question that cannot be answered from the book's content
 -   **FR-006**: The chatbot orchestration MUST use the OpenAI Agents SDK with Gemini as the LLM.
 -   **FR-007**: The backend MUST be deployed on Render and exposed via a public HTTPS endpoint with CORS enabled for the GitHub Pages domain.
 -   **FR-008**: The chatbot UI MUST be a floating button embedded on all pages of the Docusaurus site.
+-   **FR-009**: The system MUST support anonymous, persistent user sessions. The backend will generate a unique session ID for a new conversation. The client (the Docusaurus UI) is responsible for storing this session ID locally (e.g., in localStorage) and passing it with each subsequent request to maintain conversation history.
+-   **FR-010**: If the user's input is determined to be a conversational filler or greeting not directly related to book content, the chatbot MUST respond with a canned message redirecting the user to ask a book-related question (e.g., "I can only answer questions about the book. How can I help you?").
+
+## Non-Functional Quality Attributes
+
+-   **NFR-001 (Observability)**: The system MUST log all errors, user questions, and chatbot responses (ensuring no Personally Identifiable Information - PII is logged) for debugging and analytical purposes.
+-   **NFR-002 (Data Retention)**: Chat histories and associated messages MUST be retained in the Neon Serverless Postgres database for a period of 6 months.
+-   **NFR-003 (Scalability/Rate-Limiting)**: There is no specific target for concurrent user load at this stage, and rate-limiting will not be implemented. Scalability will be addressed if and when it becomes a requirement.
 
 ### Key Entities
 

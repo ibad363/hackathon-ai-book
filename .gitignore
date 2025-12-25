@@ -4,3 +4,15 @@ build/
 .cache/
 *.log
 .env*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+*.egg-info/
+
+# IDEs
+.idea/
+.vscode/

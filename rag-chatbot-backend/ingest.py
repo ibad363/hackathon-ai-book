@@ -2,7 +2,7 @@ import os
 import argparse
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from qdrant_client import QdrantClient, models
-from unstructured.loader import DirectoryLoader
+from langchain_community.document_loaders import DirectoryLoader
 import google.generativeai as genai
 from dotenv import load_dotenv
 

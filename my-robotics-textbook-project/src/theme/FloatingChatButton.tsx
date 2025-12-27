@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './FloatingChatButton.module.css';
 
 const API_URL = 'http://127.0.0.1:8000/chat'; // Replace with your backend URL
@@ -7,17 +7,7 @@ const FloatingChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<{role: string; content: string}[]>([]);
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Load session ID from localStorage on component mount
-    const savedSessionId = localStorage.getItem('chatSessionId');
-    if (savedSessionId) {
-      setSessionId(savedSessionId);
-    }
-  }, []);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -29,20 +19,17 @@ const FloatingChatButton = () => {
       setMessages((prevMessages) => [...prevMessages, userMessage]);
       setMessage('');
       setIsLoading(true);
-      setError(null);
 
       try {
-        const payload = {
-          content: userMessage.content,
-          session_id: sessionId,
-        };
+        const body = new URLSearchParams();
+        body.append('query', userMessage.content);
 
         const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify(payload),
+          body: body.toString(),
         });
 
         if (!response.ok) {
@@ -51,16 +38,9 @@ const FloatingChatButton = () => {
         }
 
         const data = await response.json();
-        setMessages((prevMessages) => [...prevMessages, { role: 'assistant', content: data.content }]);
-
-        // Save new session ID if it's the first message
-        if (!sessionId && data.session_id) {
-          setSessionId(data.session_id);
-          localStorage.setItem('chatSessionId', data.session_id);
-        }
+        setMessages((prevMessages) => [...prevMessages, { role: 'assistant', content: data.answer }]);
 
       } catch (err: any) {
-        setError(err.message || 'An unexpected error occurred.');
         setMessages((prevMessages) => [...prevMessages, { role: 'assistant', content: `Error: ${err.message}` }]);
       } finally {
         setIsLoading(false);
@@ -88,11 +68,6 @@ const FloatingChatButton = () => {
             {isLoading && (
               <div className={`${styles.message} ${styles.assistant}`}>
                 Thinking...
-              </div>
-            )}
-            {error && (
-              <div className={`${styles.message} ${styles.error}`}>
-                {error}
               </div>
             )}
           </div>

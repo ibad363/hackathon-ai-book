@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './FloatingChatButton.module.css';
 
-const API_URL = 'http://127.0.0.1:8000/chat'; // Replace with your backend URL
+// const API_URL = 'http://127.0.0.1:8000/chat'; // Replace with your backend URL
+const API_URL = 'https://ai-book-backend-4f6e.onrender.com/chat';
 
 const FloatingChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
